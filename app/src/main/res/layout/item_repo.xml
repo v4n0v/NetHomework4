@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorBackgroundLight"
+    android:paddingLeft="@dimen/std_margin"
+    android:paddingRight="@dimen/std_margin"
+    android:paddingTop="@dimen/std_margin"
+    android:layout_marginBottom="@dimen/lil_margin">
+
+    <TextView
+        android:id="@+id/repo_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        tools:text="Header" />
+
+    <TextView
+        android:id="@+id/repo_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="https://github.com/v4n0v/architect"
+        android:layout_marginBottom="@dimen/lil_margin"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@color/colorGray"/>
+
+</LinearLayout>
