@@ -116,7 +116,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
                         getViewState().setName(user.getLogin());
                         getViewState().loadAvatar(user.getAvatarUrl());
 
-                        getReposData(user.getLogin());
                         getReposData(user.getReposUrl());
                     }
 
