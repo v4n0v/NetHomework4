@@ -36,6 +36,9 @@ public class UserRepo implements IUserRepo {
             case REALM:
                 this.strategy = new RealmUserRepo();
                 break;
+            case RAW:
+                this.strategy = new RawUserRepo();
+                break;
             default:
                 this.strategy = new RawUserRepo();
                 break;

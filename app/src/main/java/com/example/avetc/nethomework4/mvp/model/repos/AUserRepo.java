@@ -3,10 +3,12 @@ package com.example.avetc.nethomework4.mvp.model.repos;
 import com.example.avetc.nethomework4.common.NetworkStatus;
 import com.example.avetc.nethomework4.entities.Repository;
 import com.example.avetc.nethomework4.entities.User;
+import com.example.avetc.nethomework4.mvp.model.api.ApiHolder;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 
 public abstract class AUserRepo implements IUserRepo {
 
@@ -15,29 +17,47 @@ public abstract class AUserRepo implements IUserRepo {
     public Observable<User> getUser(String username) {
 
         if (!NetworkStatus.isOffline()) {
-            return getUserOnline(username);
+            return ApiHolder.getApi().getUser(username).map(user -> {
+                writeUserToCache(username, user);
+                return user;
+            });
         }
         else {
-            return getUserOffline(username);
+            return Observable.create(e -> {
+              readUserFromCache(username, e);
+            });
         }
 
     }
+
+    protected abstract void readUserFromCache(String username, ObservableEmitter<User> e);
+
+    protected abstract void writeUserToCache(String username, User user);
 
 
     @Override
     public Observable<List<Repository>> getRepos(User user) {
         if (!NetworkStatus.isOffline()) {
-           return getReposOnline(user);
+            return ApiHolder.getApi().getRepos(user.getReposUrl()).map(repos -> {
+               writeReposToCache(user, repos);
+               return repos;
+            });
         } else {
-           return getReposOffline(user);
+            return Observable.create(e -> {
+                readReposFromCache(user, e);
+            });
         }
     }
 
-    protected abstract Observable<List<Repository>> getReposOffline(User user);
+    protected abstract void readReposFromCache(User user, ObservableEmitter<List<Repository>> e);
 
-    protected abstract Observable<List<Repository>> getReposOnline(User user);
+    protected abstract void writeReposToCache(User user, List<Repository> repos);
 
-    protected abstract Observable<User> getUserOnline(String username);
-
-    protected abstract Observable<User> getUserOffline(String username);
+//    protected abstract Observable<List<Repository>> getReposOffline(User user);
+//
+//    protected abstract Observable<List<Repository>> getReposOnline(User user);
+//
+//    protected abstract Observable<User> getUserOnline(String username);
+//
+//    protected abstract Observable<User> getUserOffline(String username);
 }

@@ -45,21 +45,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
         listPresenter = new ListPresenter();
     }
 
-    public void savePaper() {
-
-    }
-
-    public void loadPaper() {
-
-    }
-
-    public void saveRealm() {
-
-    }
-
-    public void loadRealm() {
-
-    }
 
     public void onPermissionsGranted() {
         loadUserData();
@@ -116,18 +101,19 @@ public class MainPresenter extends MvpPresenter<MainView> {
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(User user) {
                         Timber.d("Current user: " + user.getLogin());
                         Timber.d("URL: " + user.getReposUrl());
                         getViewState().setName(user.getLogin());
-                    getViewState().loadAvatar(user.getAvatarUrl());
+                        getViewState().loadAvatar(user.getAvatarUrl());
                         getReposData(user);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.e("Error user request: "+e.getMessage());
+                        Timber.e("Error user request: " + e.getMessage());
                     }
 
                     @Override
@@ -146,9 +132,10 @@ public class MainPresenter extends MvpPresenter<MainView> {
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(List<Repository> repositories) {
-                        Timber.d( "Repositories count = " + repositories.size());
+                        Timber.d("Repositories count = " + repositories.size());
                         listPresenter.items = repositories;
                         getViewState().updateList();
                     }
@@ -156,7 +143,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
                     @Override
                     public void onError(Throwable e) {
 
-                            Timber.e("Error repos request");
+                        Timber.e("Error repos request");
                     }
 
                     @Override
