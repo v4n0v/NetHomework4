@@ -1,17 +1,14 @@
-package com.example.avetc.nethomework4.presenter;
-
-import android.util.Log;
+package com.example.avetc.nethomework4.mvp.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-
-import com.example.avetc.nethomework4.MainView;
+import com.example.avetc.nethomework4.mvp.model.repos.UserRepo;
+import com.example.avetc.nethomework4.mvp.view.MainView;
 import com.example.avetc.nethomework4.adapter.IListPresenter;
 import com.example.avetc.nethomework4.adapter.IListRawView;
 import com.example.avetc.nethomework4.entities.Repository;
 import com.example.avetc.nethomework4.entities.User;
-import com.example.avetc.nethomework4.model.UserRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +20,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-
-
-/**
- * Created by avetc on 11.04.2018.
- */
+import timber.log.Timber;
 
 @InjectViewState
 public class MainPresenter extends MvpPresenter<MainView> {
-    String TAG = "MainPresenter";
 
-    Scheduler scheduler;
-    UserRepo userRepo;
+    private Scheduler scheduler;
+    private UserRepo userRepo;
+
 
     public ListPresenter getListPresenter() {
         return listPresenter;
@@ -48,8 +41,28 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     public MainPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        userRepo = new UserRepo();
+        userRepo = new UserRepo(UserRepo.RepoStrategy.REALM);
         listPresenter = new ListPresenter();
+    }
+
+    public void savePaper() {
+
+    }
+
+    public void loadPaper() {
+
+    }
+
+    public void saveRealm() {
+
+    }
+
+    public void loadRealm() {
+
+    }
+
+    public void onPermissionsGranted() {
+        loadUserData();
     }
 
     class ListPresenter implements IListPresenter {
@@ -72,7 +85,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
         }
     }
 
-
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
@@ -92,12 +104,8 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
         single.subscribeOn(Schedulers.io())
                 .observeOn(scheduler)
-                .subscribe(s -> {
-                    Log.d(TAG, s);
-
-                });
+                .subscribe(s -> Timber.d(s));
     }
-
 
     private void loadUserData() {
         userRepo.getUser("v4n0v")
@@ -108,20 +116,18 @@ public class MainPresenter extends MvpPresenter<MainView> {
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(User user) {
-                        Log.d(TAG, user.getLogin());
-                        Log.d(TAG, user.getReposUrl());
+                        Timber.d("Current user: " + user.getLogin());
+                        Timber.d("URL: " + user.getReposUrl());
                         getViewState().setName(user.getLogin());
-                        getViewState().loadAvatar(user.getAvatarUrl());
-
-                        getReposData(user.getReposUrl());
+                    getViewState().loadAvatar(user.getAvatarUrl());
+                        getReposData(user);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "Error request");
+                        Timber.e("Error user request: "+e.getMessage());
                     }
 
                     @Override
@@ -129,26 +135,20 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
                     }
                 });
-
     }
 
-    private void getReposData(String login){
-        userRepo.getRepos(login)
+    private void getReposData(User user) {
+        userRepo.getRepos(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(scheduler)
                 .subscribe(new Observer<List<Repository>>() {
-
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(List<Repository> repositories) {
-                        Log.d(TAG, "Repository size = "+repositories.size());
-                        for (Repository repo:repositories) {
-                            Log.d(TAG, "Repository name = "+repo.getName());
-                        }
+                        Timber.d( "Repositories count = " + repositories.size());
                         listPresenter.items = repositories;
                         getViewState().updateList();
                     }
@@ -156,6 +156,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
                     @Override
                     public void onError(Throwable e) {
 
+                            Timber.e("Error repos request");
                     }
 
                     @Override
@@ -163,8 +164,5 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
                     }
                 });
-
     }
-
-
 }

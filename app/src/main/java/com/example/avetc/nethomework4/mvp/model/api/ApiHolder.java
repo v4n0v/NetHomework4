@@ -1,4 +1,4 @@
-package com.example.avetc.nethomework4.model.api;
+package com.example.avetc.nethomework4.mvp.model.api;
 
 
 import com.google.gson.FieldNamingPolicy;
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiHolder {
     private static ApiHolder instance = new ApiHolder();
 
-    public static ApiHolder getInstance() {
+    private static ApiHolder getInstance() {
         if (instance == null) {
             return new ApiHolder();
         } else {

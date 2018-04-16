@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.avetc.nethomework4.MainActivity"
+    tools:context=".mvp.view.MainActivity"
     android:background="@color/colorBackgroundDark"
     android:orientation="vertical"
     >
     <LinearLayout
+        android:id="@+id/user_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -39,10 +40,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/repos_rv"
-
+        android:layout_below="@+id/user_linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>

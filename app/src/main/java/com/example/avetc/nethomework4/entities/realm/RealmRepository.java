@@ -1,16 +1,21 @@
-package com.example.avetc.nethomework4.entities;
+package com.example.avetc.nethomework4.entities.realm;
 
-public class Repository  {
+import com.example.avetc.nethomework4.entities.Repository;
 
-    public Repository(int id, String name, String htmlUrl) {
-        this.id = id;
-        this.name = name;
-        this.htmlUrl = htmlUrl;
-    }
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+
+
+public class RealmRepository extends RealmObject {
+
+    @PrimaryKey
     private int id;
     private String name;
     private String htmlUrl;
+
+
 
     public String getName() {
         return name;
@@ -32,8 +37,9 @@ public class Repository  {
         return id;
     }
 
+
+
     public void setId(int id) {
         this.id = id;
     }
-
 }

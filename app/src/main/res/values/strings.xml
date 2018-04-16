@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NetHomework4</string>
     <string name="waiting">Ждем данные</string>
+
+    <string name="permissons_required">Необходим доступ</string>
+    <string name="permissions_required_message">Пожалуйста, предоставьте необходимые разрешения</string>
 </resources>

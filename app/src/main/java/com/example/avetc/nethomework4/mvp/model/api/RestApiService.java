@@ -1,4 +1,4 @@
-package com.example.avetc.nethomework4.model.api;
+package com.example.avetc.nethomework4.mvp.model.api;
 
 import com.example.avetc.nethomework4.entities.Repository;
 import com.example.avetc.nethomework4.entities.User;

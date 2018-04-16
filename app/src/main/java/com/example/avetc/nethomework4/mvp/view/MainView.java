@@ -1,10 +1,7 @@
-package com.example.avetc.nethomework4;
+package com.example.avetc.nethomework4.mvp.view;
 
 import com.arellomobile.mvp.MvpView;
 
-/**
- * Created by avetc on 11.04.2018.
- */
 
 public interface MainView extends MvpView {
     void setName(String username);
@@ -14,4 +11,6 @@ public interface MainView extends MvpView {
     void updateList();
 
     void init();
+
+    void toast(String msg);
 }

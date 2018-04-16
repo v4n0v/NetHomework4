@@ -1,15 +1,31 @@
 package com.example.avetc.nethomework4.entities;
 
-/**
- * Created by avetc on 11.04.2018.
- */
+import android.graphics.Bitmap;
 
-public class User {
+public class User   {
 //    @SerializedName("login")
 //    @Expose
+
+    public User(String login, String avatarUrl, String reposUrl) {
+        this.login = login;
+        this.avatarUrl = avatarUrl;
+        this.reposUrl = reposUrl;
+    }
+
     private String login;
     private String avatarUrl;
     private String reposUrl;
+
+    public Bitmap getAvatarBitmap() {
+        return avatarBitmap;
+    }
+
+    public void setAvatarBitmap(Bitmap avatarBitmap) {
+        this.avatarBitmap = avatarBitmap;
+    }
+
+    private Bitmap avatarBitmap;
+
 
     public String getReposUrl() {
         return reposUrl;
