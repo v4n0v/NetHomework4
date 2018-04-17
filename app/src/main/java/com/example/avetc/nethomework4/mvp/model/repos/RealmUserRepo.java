@@ -5,6 +5,7 @@ import com.example.avetc.nethomework4.entities.User;
 import com.example.avetc.nethomework4.entities.realm.RealmRepository;
 import com.example.avetc.nethomework4.entities.realm.RealmUser;
 import com.example.avetc.nethomework4.mvp.model.api.ApiHolder;
+import com.example.avetc.nethomework4.mvp.model.api.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,10 @@ import timber.log.Timber;
 
 
 public class RealmUserRepo extends AUserRepo {
+
+    public RealmUserRepo(ApiService apiService) {
+        super(apiService);
+    }
 
     @Override
     protected void readUserFromCache(String username, ObservableEmitter<User> e) {

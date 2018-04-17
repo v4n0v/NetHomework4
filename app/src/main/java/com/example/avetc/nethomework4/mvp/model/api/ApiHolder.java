@@ -21,11 +21,11 @@ public class ApiHolder {
         }
     }
 
-    public static RestApiService getApi() {
+    public static ApiService getApi() {
         return getInstance().api;
     }
 
-    private RestApiService api;
+    private ApiService api;
 
     private ApiHolder() {
 
@@ -38,7 +38,7 @@ public class ApiHolder {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
-                .create(RestApiService.class);
+                .create(ApiService.class);
 
     }
 

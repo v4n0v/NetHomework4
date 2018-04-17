@@ -3,6 +3,8 @@ package com.example.avetc.nethomework4.mvp.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
+import com.example.avetc.nethomework4.App;
+import com.example.avetc.nethomework4.mvp.model.api.ApiService;
 import com.example.avetc.nethomework4.mvp.model.repos.UserRepo;
 import com.example.avetc.nethomework4.mvp.view.MainView;
 import com.example.avetc.nethomework4.adapter.IListPresenter;
@@ -12,6 +14,8 @@ import com.example.avetc.nethomework4.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
@@ -26,8 +30,7 @@ import timber.log.Timber;
 public class MainPresenter extends MvpPresenter<MainView> {
 
     private Scheduler scheduler;
-    private UserRepo userRepo;
-
+    @Inject UserRepo userRepo;
 
     public ListPresenter getListPresenter() {
         return listPresenter;
@@ -41,7 +44,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     public MainPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        userRepo = new UserRepo(UserRepo.RepoStrategy.REALM);
         listPresenter = new ListPresenter();
     }
 
@@ -52,7 +54,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     class ListPresenter implements IListPresenter {
         List<Repository> items = new ArrayList<>();
-
 
         @Override
         public void bindView(IListRawView view) {

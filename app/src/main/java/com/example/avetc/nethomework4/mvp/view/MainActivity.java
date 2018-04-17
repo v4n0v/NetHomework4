@@ -3,14 +3,12 @@ package com.example.avetc.nethomework4.mvp.view;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,17 +16,18 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.avetc.nethomework4.App;
 import com.example.avetc.nethomework4.R;
 import com.example.avetc.nethomework4.adapter.RecyclerAdapter;
 import com.example.avetc.nethomework4.image.GlideLoader;
-import com.example.avetc.nethomework4.image.ImageLoader;
+import com.example.avetc.nethomework4.image.IImageLoader;
 import com.example.avetc.nethomework4.mvp.presenter.MainPresenter;
-import com.jakewharton.rxbinding2.view.RxView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
 
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
@@ -46,10 +45,11 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @BindView(R.id.repos_rv)
     RecyclerView rv;
 
-
     @InjectPresenter
     MainPresenter presenter;
-    ImageLoader<ImageView> imageLoader;
+
+    @Inject
+    IImageLoader<ImageView> imageLoader;
 
     RecyclerAdapter adapter;
 
@@ -63,8 +63,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        imageLoader = new GlideLoader();
-
+        App.getInstance().getAppComponent().inject(presenter);
+        App.getInstance().getAppComponent().inject(this);
         checkPermissions();
     }
 

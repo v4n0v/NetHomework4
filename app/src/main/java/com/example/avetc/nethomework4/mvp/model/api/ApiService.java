@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
-public interface RestApiService {
+public interface ApiService {
     @GET("/users/{user}")
     Observable<User> getUser(@Path("user") String username);
 
