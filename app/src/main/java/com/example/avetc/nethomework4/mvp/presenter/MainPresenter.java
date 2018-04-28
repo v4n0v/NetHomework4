@@ -30,7 +30,9 @@ import timber.log.Timber;
 public class MainPresenter extends MvpPresenter<MainView> {
 
     private Scheduler scheduler;
-    @Inject UserRepo userRepo;
+
+    @Inject
+    UserRepo userRepo;
 
     public ListPresenter getListPresenter() {
         return listPresenter;
@@ -75,7 +77,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().init();
-        loadUserData();
+
 //        getUserFromOk();
     }
 
@@ -93,38 +95,27 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 .subscribe(s -> Timber.d(s));
     }
 
-    private void loadUserData() {
+    public void loadUserData() {
         userRepo.getUser("v4n0v")
                 .subscribeOn(Schedulers.io())
                 .observeOn(scheduler)
-                .subscribe(new Observer<User>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(User user) {
-                        Timber.d("Current user: " + user.getLogin());
-                        Timber.d("URL: " + user.getReposUrl());
-                        getViewState().setName(user.getLogin());
-                        getViewState().loadAvatar(user.getAvatarUrl());
-                        getReposData(user);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e("Error user request: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                .subscribe(user -> {
+                            userRepo.getRepos(user)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(scheduler)
+                                    .subscribe(repositories -> {
+                                        Timber.d("Current user: " + user.getLogin());
+                                        Timber.d("URL: " + user.getReposUrl());
+                                        getViewState().setName(user.getLogin());
+                                        getViewState().loadAvatar(user.getAvatarUrl());
+                                        listPresenter.items = repositories;
+                                        getViewState().updateList();
+                                    });
+                        }
+                );
     }
 
-    private void getReposData(User user) {
+    public void getReposData(User user) {
         userRepo.getRepos(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(scheduler)

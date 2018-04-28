@@ -33,15 +33,17 @@ public class ImageLoaderModule {
     }
 
     @Provides
-    @Named("aa")
-    ICacheImage passiveCache() {
-        return new AAImageCache();
-    }
-
-    @Provides
     @Named("realm")
     ICacheImage realmCache() {
         return new RealmImageCache();
+    }
+
+
+
+    @Provides
+    @Named("aa")
+    ICacheImage passiveCache() {
+        return new AAImageCache();
     }
 
 

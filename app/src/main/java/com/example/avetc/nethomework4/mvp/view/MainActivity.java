@@ -19,6 +19,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.avetc.nethomework4.App;
 import com.example.avetc.nethomework4.R;
 import com.example.avetc.nethomework4.adapter.RecyclerAdapter;
+import com.example.avetc.nethomework4.entities.User;
 import com.example.avetc.nethomework4.image.GlideLoader;
 import com.example.avetc.nethomework4.image.IImageLoader;
 import com.example.avetc.nethomework4.mvp.presenter.MainPresenter;
@@ -127,7 +128,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void init() {
-        //  presenter.initMarksList();
+
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new RecyclerAdapter(presenter.getListPresenter());
         rv.setAdapter(adapter);
@@ -137,6 +138,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     public void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 
 
 }

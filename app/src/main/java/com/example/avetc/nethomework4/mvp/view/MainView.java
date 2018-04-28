@@ -1,6 +1,7 @@
 package com.example.avetc.nethomework4.mvp.view;
 
 import com.arellomobile.mvp.MvpView;
+import com.example.avetc.nethomework4.entities.User;
 
 
 public interface MainView extends MvpView {
@@ -13,4 +14,6 @@ public interface MainView extends MvpView {
     void init();
 
     void toast(String msg);
+
+
 }

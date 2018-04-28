@@ -20,8 +20,6 @@ public class UserRepo implements IUserRepo {
     public UserRepo(RepoStrategy strategy, ApiService apiService) {
         this.apiService=apiService;
         initStrategy(strategy);
-
-
     }
 
     private AUserRepo strategy;

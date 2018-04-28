@@ -14,6 +14,6 @@ public interface ApiService {
     @GET("/users/{user}")
     Observable<User> getUser(@Path("user") String username);
 
-     @GET
+    @GET
     Observable<List<Repository>> getRepos(@Url String url);
 }

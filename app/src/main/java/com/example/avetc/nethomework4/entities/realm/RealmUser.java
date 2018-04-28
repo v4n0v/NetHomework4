@@ -1,7 +1,5 @@
 package com.example.avetc.nethomework4.entities.realm;
 
-import com.example.avetc.nethomework4.entities.Repository;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

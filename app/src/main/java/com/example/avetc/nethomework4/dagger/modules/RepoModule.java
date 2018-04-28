@@ -17,6 +17,4 @@ public class RepoModule {
         return new UserRepo(strategy, service);
     }
 
-
-
 }

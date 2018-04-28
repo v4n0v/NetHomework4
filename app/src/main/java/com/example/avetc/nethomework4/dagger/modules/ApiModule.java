@@ -24,24 +24,32 @@ public class ApiModule {
     public ApiService api(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
+
     @Provides
-    public Retrofit retrofit(@Named("gson") GsonConverterFactory gsonConverterFactory){
+    public Retrofit retrofit(@Named("endpoint") String endpoint, @Named("gson") GsonConverterFactory gsonConverterFactory) {
         return new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl(endpoint)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(gsonConverterFactory)
                 .build();
 
     }
 
-    @Provides @Named("gson")
-    public GsonConverterFactory gsonConverterFactory(Gson gson){
-        return  GsonConverterFactory.create(gson);
+    @Provides
+    @Named("endpoint")
+    public String endpoint(){
+        return "https://api.github.com/";
+    }
+
+    @Provides
+    @Named("gson")
+    public GsonConverterFactory gsonConverterFactory(Gson gson) {
+        return GsonConverterFactory.create(gson);
     }
 
 
     @Provides
-    public Gson gson(){
+    public Gson gson() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
